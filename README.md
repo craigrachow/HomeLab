@@ -5,14 +5,14 @@ High level overview of what is encompased.
 
 ## Containers (docker)
 
-## ParrotHTB-Linux-Dockerfile  
+### - ParrotHTB-Linux-Dockerfile  
 A simple dockerfile which allows you to build a _docker image_ starting from the latest official one of **Kali Linux** and including some useful tools.  
-### Included tools  
+#### Included tools  
 These are the main **tools** which are included:
 - Kali Linux [Top 10](https://tools.kali.org/kali-metapackages) metapackage
 - exploitdb , man-db , dirb , nikto , wpscan , uniscan , tor , proxychains  
 Note that you can _add/modify/delete_ configuration files by doing the related changes in the dockerfile.
-### Other useful things  
+#### Other useful things  
 
   
 
@@ -49,3 +49,16 @@ _If you want to support me, I would be grateful ❤️_
 - Add some more useful tools, languages.
 
 **Enjoy!**
+
+Getting Parrot HTB to work
+1. containers/parrotHTB.sh -deploy container via dockerfile and yaml. befroe so make ./parrotHTB folder for persistent storage. 
+2. software/prepserver.sh - install docker and cli and any other apps
+3. storage/
+
+vm_yaml:
+  image: hello-world
+  before_script: 
+    - apt-get update && apt-get install make
+  script:
+    - make test
+    
