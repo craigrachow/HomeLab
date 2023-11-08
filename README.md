@@ -55,10 +55,22 @@ Getting Parrot HTB to work
 2. software/prepserver.sh - install docker and cli and any other apps
 3. storage/
 
-vm_yaml:
-  image: hello-world
-  before_script: 
-    - apt-get update && apt-get install make
-  script:
-    - make test
+
+---------- PRACTICE --------------
+
+variables:
+  IMAGE_NAME: hello-world
+  IMAGE_TAG: hello-world-1.0
+  
+build-image:
+  image: docker-latest
+  services:
+   - docker-latest-dind
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+before_script: 
+  - apt-get update && apt-get install make
+script:
+  - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+  - docker push $IMAGE_NAME:$IMAGE_TAG
     
