@@ -16,7 +16,8 @@ Note that you can _add/modify/delete_ configuration files by doing the related c
 
   
 
-## Usage
+## Usage  
+In order to build an _image_ from this dockerfile, just go on the folder where it is located and simple open your favourite **Terminal**, typing as follows:
 - Automated  
  -- Login to server and pull this repo to relevant dirctory. eg. git pull https://github.com/craigrachow/HomeLab
  -- python or bash ./build homelab.py
@@ -27,7 +28,7 @@ Note that you can _add/modify/delete_ configuration files by doing the related c
   ```sh
   docker build [-t your_image_name] .
   ```
-In order to build an _image_ from this dockerfile, just go on the folder where it is located and simple open your favourite **Terminal**, typing as follows:
+
 
 
 
@@ -40,9 +41,8 @@ Check out [Kali Linux on a Docker container: the easiest way](https://tsumarios.
 - LinkedIn: 
 - Website
 
-_If you want to support me, I would be grateful ❤️_
-
-<a href="https://www.buymeacoffee.com/tsumarios" target="_blank"><img
+_If you want to support me, I would be grateful ❤️_  
+<a href="https://www.buymeacoffee.com/craigrachow" target="_blank"><img
         src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="40"></a>
 
 ### Todos  
