@@ -35,18 +35,6 @@ In order to build an _image_ from this dockerfile, just go on the folder where i
 
 Check out [Kali Linux on a Docker container: the easiest way](https://tsumarios.github.io/blog/2022/09/17/kali-linux-docker-container/) for more detailed info.
 
-#### Contacts  
-- Email: 
-- LinkedIn: 
-- Website
-
-_If you want to support me, I would be grateful ❤️_
-
-<a href="https://www.buymeacoffee.com/tsumarios" target="_blank"><img
-        src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="40"></a>
-
-### Todos  
-- Add some more useful tools, languages.
 
 **Enjoy!**
 
