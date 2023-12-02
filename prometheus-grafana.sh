@@ -68,3 +68,4 @@ scrape_configs:
 echo "Start Container for Prometheus & Grafana Machine"    
 cd ./Containers/prometheus-grafana/
 sudo docker-compose up -d
+sudo docker ps
