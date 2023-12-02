@@ -5,8 +5,8 @@
 echo "starting prepserver.sh script"
 
 # Update OS and Repo's
-sudo apt-get update 
-sudo apt-get install docker.io && apt-get install docker-cli 
+sudo apt-get update -y
+sudo apt-get install docker.io -y && apt-get install docker-cli -y
 
 
 # Create Software/Storage/Containers Directories - maybe not needed as the git pull should create
