@@ -11,4 +11,6 @@ sudo apt-get install docker.io && apt-get install docker-cli
 
 # Create Software/Storage/Containers Directories - maybe not needed as the git pull should create
 
+# Create Docker Storage
+sudo mkdir Storage && sudo mkdir Containers && sudo mkdir ./Storage/shared
 
