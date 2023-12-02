@@ -64,3 +64,7 @@ scrape_configs:
   static_configs:
   - targets:
     - localhost:9090" | sudo tee -a ./Containers/prometheus-grafana/prometheus.yaml > /dev/null 
+
+echo "Start Container for Prometheus & Grafana Machine"    
+cd ./Containers/prometheus-grafana/
+sudo docker-compose up -d
