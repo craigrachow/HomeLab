@@ -12,5 +12,7 @@ sudo apt-get install docker.io -y && apt-get install docker-cli -y
 # Create Software/Storage/Containers Directories - maybe not needed as the git pull should create
 
 echo "Create Docker Storage"
-sudo mkdir Storage && sudo mkdir Containers && sudo mkdir ./Storage/shared
+sudo mkdir -vp {Storage/shared,Containers}
 
+
+echo "ending prepserver.sh script"
