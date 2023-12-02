@@ -27,6 +27,6 @@ echo "services:
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
 volumes:
-  prom_data:" | sudo tee -a /Containers/prometheus-grafana/compose.yaml > /dev/null 
+  prom_data:" | sudo tee -a ./Containers/prometheus-grafana/compose.yaml > /dev/null 
 
   
