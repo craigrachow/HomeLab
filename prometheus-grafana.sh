@@ -40,7 +40,7 @@ datasources:
   url: http://prometheus:9090 
   isDefault: true
   access: proxy
-  editable: true" | sudo tee -a ./Containers/prometheus-grafana/datasource.yaml > /dev/null 
+  editable: true" | sudo tee -a ./Containers/prometheus-grafana/grafana/datasource.yaml > /dev/null 
 
    echo "Create prometheus.yaml"
    echo "global:
@@ -63,7 +63,7 @@ scrape_configs:
   scheme: http
   static_configs:
   - targets:
-    - localhost:9090" | sudo tee -a ./Containers/prometheus-grafana/prometheus.yaml > /dev/null 
+    - localhost:9090" | sudo tee -a ./Containers/prometheus-grafana/prometheus/prometheus.yaml > /dev/null 
 
 echo "Start Container for Prometheus & Grafana Machine"    
 sudo docker-compose -f ./Containers/prometheus-grafana/compose.yaml up -d
