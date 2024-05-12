@@ -5,17 +5,19 @@ echo "Make Container for Jellyfin"
 sudo mkdir -pv ./Containers/jellyfin
 
 # needed to fic /config/log issue
-chown -R user:user ./jellyfin
+# chown -R user:user ./jellyfin
 
 echo "Create Jellyfin compose.yaml"
 echo "services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    user: 1000:1000
+  environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Darwin
     ports:
       - 8096:8096
-   # network_mode: 'host'
     volumes:
       - ./jellyfin:/config
       - ./jellyfin:/cache
