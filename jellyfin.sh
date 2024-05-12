@@ -4,6 +4,8 @@
 echo "Make Container for Jellyfin"
 sudo mkdir -pv ./Containers/jellyfin
 
+# needed to fic /config/log issue
+chown -R user:user ./jellyfin
 
 echo "Create Jellyfin compose.yaml"
 echo "services:
