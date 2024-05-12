@@ -2,6 +2,8 @@
 
 echo "Make Container for Prometheus & Grafana Machine"
 sudo mkdir -pv ./Containers/prometheus-grafana
+sudo mkdir -pv ./Containers/prometheus-grafana/grafana
+sudo mkdir -pv ./Containers/prometheus-grafana/prometheus
 
 echo "Create Prometheus & Grafana compose.yaml"
 echo "services:
