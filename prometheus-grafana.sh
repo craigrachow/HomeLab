@@ -26,7 +26,7 @@ echo "services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
-      - ./:/etc/grafana/provisioning/datasources
+      - ./grafana:/etc/grafana/provisioning/datasources
 volumes:
   prom_data:" | sudo tee -a ./Containers/prometheus-grafana/compose.yaml > /dev/null 
 
