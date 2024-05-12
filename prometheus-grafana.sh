@@ -14,7 +14,7 @@ echo "services:
       - 9090:9090
     restart: unless-stopped
     volumes:
-      - ./:/etc/prometheus
+      - ./prometheus:/etc/prometheus
       - prom_data:/prometheus
   grafana:
     image: grafana/grafana
