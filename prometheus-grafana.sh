@@ -2,8 +2,7 @@
 
 echo "Make Container for Prometheus & Grafana Machine"
 sudo mkdir -pv ./Containers/prometheus-grafana
-sudo mkdir -pv ./Containers/prometheus-grafana/grafana
-sudo mkdir -pv ./Containers/prometheus-grafana/prometheus
+
 
 echo "Create Prometheus & Grafana compose.yaml"
 echo "services:
@@ -11,7 +10,7 @@ echo "services:
     image: prom/prometheus
     container_name: prometheus
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--config.file=/etc/prometheus/prometheus.yaml'
     ports:
       - 9090:9090
     restart: unless-stopped
@@ -34,6 +33,7 @@ volumes:
 
 
   echo "Create Grafana datasource.yaml"
+  sudo mkdir -pv ./Containers/prometheus-grafana/grafana
   echo "apiVersion: 1
 
 datasources:
@@ -45,6 +45,7 @@ datasources:
   editable: true" | sudo tee -a ./Containers/prometheus-grafana/grafana/datasource.yml > /dev/null 
 
    echo "Create prometheus.yaml"
+   sudo mkdir -pv ./Containers/prometheus-grafana/prometheus
    echo "global:
   scrape_interval: 15s
   scrape_timeout: 10s
@@ -65,7 +66,7 @@ scrape_configs:
   scheme: http
   static_configs:
   - targets:
-    - localhost:9090" | sudo tee -a ./Containers/prometheus-grafana/prometheus/prometheus.yml > /dev/null 
+    - localhost:9090" | sudo tee -a ./Containers/prometheus-grafana/prometheus/prometheus.yaml > /dev/null 
 
 echo "Start Container for Prometheus & Grafana Machine"    
 sudo docker-compose -f ./Containers/prometheus-grafana/compose.yaml up -d
