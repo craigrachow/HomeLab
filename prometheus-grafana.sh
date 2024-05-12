@@ -42,7 +42,7 @@ datasources:
   url: http://prometheus:9090 
   isDefault: true
   access: proxy
-  editable: true" | sudo tee -a ./Containers/prometheus-grafana/grafana/datasource.yml > /dev/null 
+  editable: true" | sudo tee -a ./Containers/prometheus-grafana/grafana/datasource.yaml > /dev/null 
 
    echo "Create prometheus.yaml"
    sudo mkdir -pv ./Containers/prometheus-grafana/prometheus
