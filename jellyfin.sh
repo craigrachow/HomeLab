@@ -12,7 +12,7 @@ echo "services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-  environment:
+    environment:
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Darwin
