@@ -11,11 +11,11 @@ echo "services:
     ports:
       - 3000:3000
     volumes:
-      - /path/to/config:/app/config # Make sure your local config directory exists
+      - ./homepage:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: gethomepage.dev # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts" | sudo tee -a ./Containers/portainer/compose.yaml > /dev/null 
+      HOMEPAGE_ALLOWED_HOSTS: gethomepage.dev # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts" | sudo tee -a ./Containers/homepage/compose.yaml > /dev/null 
 
-echo "Start Container for Portainer Machine"    
-sudo docker-compose -f ./Containers/portainer/compose.yaml up -d
+echo "Start Container for Homepage Machine"    
+sudo docker-compose -f ./Containers/homepage/compose.yaml up -d
 sudo docker ps
