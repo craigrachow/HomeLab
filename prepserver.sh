@@ -7,7 +7,8 @@ echo "starting prepserver.sh script"
 echo "Update OS and Repo's"
 sudo apt-get update -y
 sudo apt install docker.io docker-compose -y
-
+sudo yum update -y
+sudo yum install docker.io docker-compose -y
 
 # Create Software/Storage/Containers Directories - maybe not needed as the git pull should create
 
