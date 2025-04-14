@@ -10,6 +10,9 @@ sudo apt install docker.io docker-compose -y
 sudo yum update -y
 sudo yum install docker docker-compose -y
 
+echo "Start Docker Apps"
+systemctl start docker.service
+
 # Create Software/Storage/Containers Directories - maybe not needed as the git pull should create
 
 echo "Create Docker Storage"
