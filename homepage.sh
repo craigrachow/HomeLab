@@ -9,7 +9,7 @@ echo "services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     ports:
-      - 3050:3050
+      - 4000:4000
     volumes:
       - ./homepage:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
