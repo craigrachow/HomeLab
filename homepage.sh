@@ -15,7 +15,7 @@ echo "services:
       - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
     environment:
       HOMEPAGE_ALLOWED_HOSTS: 192.168.0.110:4000 # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts
-      - PORT=4000" | sudo tee -a ./Containers/homepage/compose.yaml > /dev/null 
+      PORT: 4000" | sudo tee -a ./Containers/homepage/compose.yaml > /dev/null 
 
 echo "Start Container for Homepage Machine"    
 sudo docker-compose -f ./Containers/homepage/compose.yaml up -d
