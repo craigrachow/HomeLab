@@ -3,12 +3,11 @@
 echo "Make Container for ITtools"
 sudo mkdir -pv ./Containers/ittools/ittools_data
 
-
 echo "Create ITtools compose.yaml"
 echo "services:
     ittools:
       container_name: ittools
-      image: image: 'corentinth/it-tools:latest'  # The Docker image to use.
+      image: image: 'corentinth/it-tools:latest'
       restart: unless-stopped
       ports:
         - '8055:80'
