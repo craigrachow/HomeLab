@@ -11,7 +11,7 @@ echo "services:
       image: image: 'corentinth/it-tools:latest'  # The Docker image to use.
       restart: unless-stopped
       ports:
-          - '8055:80'
+        - '8055:80'
       volumes:
         - ./ittools_data:/etc/ittools_data" | sudo tee -a ./Containers/ittools/compose.yaml > /dev/null 
 
