@@ -15,8 +15,7 @@ echo "services:
     environment:
       - SECRET_ENCRYPTION_KEY=cca7b7b2e0997f0c48a8be2cd949ce715f36cc5c8844b42f8cbdaf0ff99307b5
     volumes:
-      - ./portainer_data:/etc/portainer_data
-      - /var/run/docker.sock:/var/run/docker.sock" | sudo tee -a ./Containers/portainer/compose.yaml > /dev/null 
+      - ./homarr_data:/etc/homarr_data" | sudo tee -a ./Containers/homarr/compose.yaml > /dev/null 
 
 echo "Start Container for Homarr Machine"    
 sudo docker-compose -f ./Containers/homarr/compose.yaml up -d
