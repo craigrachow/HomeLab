@@ -7,7 +7,7 @@ echo "Create ITtools compose.yaml"
 echo "services:
     ittools:
       container_name: ittools
-      image: image: 'corentinth/it-tools:latest'
+      image: 'corentinth/it-tools:latest'        # The Docker image to use.
       restart: unless-stopped
       ports:
         - '8055:80'
