@@ -11,7 +11,7 @@ echo "services:
       image: ghcr.io/homarr-labs/homarr:latest
       restart: unless-stopped
     ports:
-      - 7575:7575
+      - '7575:7575'
     environment:
       - SECRET_ENCRYPTION_KEY=cca7b7b2e0997f0c48a8be2cd949ce715f36cc5c8844b42f8cbdaf0ff99307b5
     volumes:
