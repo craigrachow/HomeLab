@@ -52,5 +52,6 @@ _If you want to support me, I would be grateful ❤️_
 
 ### Todos  
 - Add some more useful tools, languages.
+- Add VULS Scanner https://www.helpnetsecurity.com/2025/05/05/vuls-open-source-agentless-vulnerability-scanner/  INSTRUCTIONS https://vuls.io/docs/en/install-with-vulsctl.html  
 
 **Enjoy!**
