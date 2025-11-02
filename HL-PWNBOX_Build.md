@@ -40,7 +40,7 @@ It will run **Parrot OS (HTB Edition)** on the Proxmox platform, isolated from p
 3. **OS Tab:**  
    - Choose your uploaded **Parrot ISO**
 4. **System Tab:**  
-   - BIOS: `OVMF (UEFI)`    
+   - BIOS: `Default (SeaBIOS)`    
    - SCSI Controller: `VirtIO SCSI`
 5. **Hard Disk:**  
    - Disk Size: `20GB`  
