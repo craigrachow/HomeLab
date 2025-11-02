@@ -1,4 +1,4 @@
-# Proxmox VE — Step-by-Step Install Guide
+# Proxmox VE - Step-by-Step Install Guide
 
 This guide covers how i went about installing **Proxmox VE** on my HomeLab machine.  
 
