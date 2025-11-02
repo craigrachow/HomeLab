@@ -106,10 +106,12 @@ ip addr show eth0
 1. Install and enable the SSH service:
 
 ```bash
-sudo apt update && sudo apt install -y openssh-server
+sudo apt update && sudo apt upgrade -y
 sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
+If error when updating, run the following  
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <MISSING_KEY>  
 
 2. Confirm status:
 
@@ -127,7 +129,6 @@ Set:
 ```
 PermitRootLogin no
 PasswordAuthentication yes
-AllowUsers craig
 ```
 
 Then restart:
@@ -137,7 +138,7 @@ sudo systemctl restart ssh
 
 Now you can SSH in:
 ```bash
-ssh craig@192.168.0.208
+ssh user@192.168.0.208
 ```
 
 ---
@@ -163,7 +164,7 @@ sudo ufw allow 3389/tcp
 You can now connect via **Windows Remote Desktop (RDP)**:
 ```
 Address: 192.168.0.208
-Username: craig
+Username: user
 Password: ********
 ```
 
@@ -171,13 +172,7 @@ Password: ********
 
 ## 🧰 Step 7. Recommended Post-Install Tools
 
-Install your preferred hacking/CTF tools:
-
-```bash
-sudo apt install -y nmap metasploit-framework gobuster john hashcat feroxbuster sqlmap wfuzz
-```
-
-Or update Parrot’s security toolset:
+Update Parrot’s security toolset:
 
 ```bash
 sudo parrot-upgrade
@@ -193,36 +188,5 @@ sudo parrot-upgrade
    ```bash
    sudo apt update && sudo apt upgrade -y
    ```
-3. **Restrict Proxmox Network Access:**
-   - Keep this VM isolated in your **HomeLab subnet** only.
-4. **Enable Proxmox Backup:**
+3. **Enable Proxmox Backup:**
    - Add this VM to your `truenas-backups` NFS or SMB share.
-
----
-
-## 🧪 Step 9. Verify Connectivity
-
-- Ping from Proxmox:
-  ```bash
-  ping 192.168.0.208
-  ```
-- SSH test:
-  ```bash
-  ssh craig@192.168.0.208
-  ```
-- RDP test using client of your choice.
-
----
-
-## 🏁 HL-PWNBOX Ready
-
-You now have a fully functional, secure **Parrot OS hacking VM** ready for CTFs, penetration testing, and HomeLab experimentation.
-
-**Backup:** Add this VM to your Proxmox backup schedule.  
-**Snapshot regularly** before major tool or system updates.
-
----
-
-**Document Owner:** Craig Rachow
-**Environment:** HomeLab (Proxmox 8.x)
-**Last Updated:** 2025-11-02
