@@ -1,8 +1,8 @@
 # HL-PWNBOX — Parrot OS Build Guide
 
 **Purpose:**  
-This VM serves as a **penetration testing, CTF, and security research** environment within the HomeLab.  
-It will run **Parrot OS (Security Edition)** on the Proxmox platform, isolated from production hosts.
+This VM serves as a **penetration testing, CTF, and security research** environment within my HomeLab.  
+It will run **Parrot OS (HTB Edition)** on the Proxmox platform, isolated from production hosts.
 
 ---
 
@@ -12,11 +12,11 @@ It will run **Parrot OS (Security Edition)** on the Proxmox platform, isolated f
 |------|--------------|
 | **VM Name** | `HL-PWNBOX` |
 | **Purpose** | Penetration Testing / CTF / Ethical Hacking |
-| **Base OS** | Parrot OS Security Edition (latest stable ISO) |
+| **Base OS** | Parrot OS HTB Edition (latest stable ISO) |
 | **Host Platform** | Proxmox VE |
 | **Assigned IP** | `192.168.0.208` |
 | **Network Type** | Bridged (vmbr0) |
-| **Resources** | 4 vCPU / 8GB RAM / 80GB Disk (adjust as needed) |
+| **Resources** | 2 vCPU / 8GB RAM / 20GB Disk |
 | **Access Methods** | SSH, RDP (XRDP), Proxmox Console |
 
 ---
@@ -40,12 +40,10 @@ It will run **Parrot OS (Security Edition)** on the Proxmox platform, isolated f
 3. **OS Tab:**  
    - Choose your uploaded **Parrot ISO**
 4. **System Tab:**  
-   - BIOS: `OVMF (UEFI)`  
-   - Machine: `q35`  
+   - BIOS: `OVMF (UEFI)`    
    - SCSI Controller: `VirtIO SCSI`
 5. **Hard Disk:**  
-   - Bus/Device: `VirtIO Block`  
-   - Disk Size: `80GB`  
+   - Disk Size: `20GB`  
    - Storage: your preferred datastore
 6. **CPU:**  
    - Cores: `4`  
@@ -54,7 +52,6 @@ It will run **Parrot OS (Security Edition)** on the Proxmox platform, isolated f
    - Allocate `8192 MB`
 8. **Network:**  
    - Bridge: `vmbr0`  
-   - Model: `VirtIO (paravirtualized)`
 9. Finish setup and start the VM.
 
 ---
@@ -65,11 +62,7 @@ It will run **Parrot OS (Security Edition)** on the Proxmox platform, isolated f
 2. Choose **Install Parrot OS** (not Live).
 3. Follow the installation prompts:
    - Partition disk automatically
-   - Create a user account, e.g.:
-     ```
-     Username: craig
-     Password: ********
-     ```
+   - Create a user account
    - Set hostname: `HL-PWNBOX`
 4. Once installation is complete, remove the ISO and reboot.
 
