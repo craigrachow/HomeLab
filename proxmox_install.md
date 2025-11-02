@@ -73,12 +73,6 @@ systemctl restart pveproxy.service
 apt update && apt full-upgrade -y
 ```
 
-If you’re using the free (no-subscription) version, add the non-subscription repo:
-```bash
-echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" > /etc/apt/sources.list.d/pve-no-subscription.list
-apt update
-```
-
 ### 3. Configure NTP (Time Sync)
 ```bash
 timedatectl set-ntp true
@@ -104,12 +98,69 @@ Replace `enp3s0` with your network interface name (`ip link` to find it).
 
 ## 🗂️ Storage Setup
 
-- **LVM-Thin:** Already created during install, good for VM disks.  
-- **ZFS:** Create separate datasets for media or VM images.  
-- **Extra storage:** Add CIFS/NFS for media or backups:  
-  GUI → Datacenter → Storage → Add → (choose type)
+- **Local-LVM (LVM-Thin):** Already created during install, good for VM disks.  
+- **Local (ZFS):** Created separate datasets for media or VM images.  
+- **Extra storage:** Add CIFS/NFS for media or backups:
+### ⚙️ Step 1. Create a Dedicated Storage Dataset
+1. Log in to **TrueNAS SCALE Web UI**.
+2. Go to **Storage → Datasets → Add Dataset**.
+3. Create a dataset called `homelab`.
+   - **Share Type:** Generic  
+   - **Compression:** lz4  
+   - **ACL Type:** POSIX  
+4. Click **Save**.
+5. Create a Dedicated User for Proxmox Access:
+6. Go to **Accounts → Users → Add User**.
+Set:
+   - **Username:** `proxmox`
+   - **Password:** (strong password)
+   - **Shell:** `/usr/sbin/nologin`
+   - Under **Auxiliary Groups**, add `wheel` or `backup` if applicable.  
+Click **Save**.
+7. Set Dataset Permissions
+8. Go to your dataset: **Storage → Datasets → homelab → Edit Permissions**.
+Set:  
+   - **Owner (User):** `proxmox`
+   - **Owner (Group):** `proxmox`
+   - **Permissions:** Read/Write/Execute for owner  
+Tick apply user and apply group. Click **Save changes**.
+9. Enable and Configure NFS Service:
+10. Navigate to **Shares → Unix Shares (NFS) → Add**.
+11. Choose the path:  
+   `/mnt/<poolname>/homelab`
+Check:  
+   - ✅ **Mapall User:** `proxmox`
+   - ✅ **Mapall Group:** `proxmoxuser`
+12. Click **Save**, then **Enable Service**.
+### Step 2 on Proxmox, mount it using CIFS/SMB:
+```bash
+mkdir -p /mnt/homelab
+mount -t cifs //192.168.0.150/homelab /mnt/homelab \
+  -o username=proxmox,password='YOUR_PASSWORD',vers=3.0
+```
+1. To make it permanent, edit /etc/fstab on Proxmox and add the following line:  
+//192.168.0.150/homelab /mnt/homelab cifs credentials=/root/.smbcred,iocharset=utf8,vers=3.0 0 0
+To test type **mount -a**
+2. Create /root/.smbcred:  
+username=proxmox
+password=YOUR_PASSWORD
+3. Set permissions:  
+chmod 600 /root/.smbcred
+### Step 3. Add Storage to Proxmox
+In the Proxmox Web UI:
+1. Go to Datacenter → Storage → Add → NFS (or CIFS).
+- Name: truenas-homelab
+- Server: 192.168.0.150
+- Username: proxmox
+- Password: YOUR_PASSWORD
+- Share: homelab (/mnt/homelab)
+- Content types:backup, ISO image, Disk image
+Click Add.  
+### Step 4. Test Backup & Upload
+Test from CLI:
+vzdump 100 --dumpdir /mnt/homelab --mode snapshot
+Or upload an ISO via the Proxmox web interface.
 
----
 
 ## 🧠 Useful Proxmox Commands
 
