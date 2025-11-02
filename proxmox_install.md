@@ -161,6 +161,7 @@ Test from CLI:
 vzdump 100 --dumpdir /mnt/homelab --mode snapshot
 Or upload an ISO via the Proxmox web interface.
 
+---
 
 ## 🧠 Useful Proxmox Commands
 
@@ -194,74 +195,19 @@ systemctl enable --now qemu-guest-agent
 ---
 
 ## 🧰 Backups & Snapshots
-
-| Task | Recommendation |
+Set the following in the WebUI: Datacentre -> Backup
+| Task | Retention |
 |-------|----------------|
-| Critical VMs (HL-RHServer) | Daily backups |
-| General VMs | Weekly backups |
-| Vuln/CTF Boxes | Snapshots only before tests |
-| Retention | 2–4 copies minimum |
-
-> You can configure automated backups in:  
-> **Datacenter → Backup → Add**
-
----
-
-## 🔒 Security & Hardening
-
-- Use SSH keys only — disable password auth.  
-- Keep untrusted boxes (HL-PWNBOX, HL-VULBOX) isolated on separate bridge or VLAN.  
-- Enable Proxmox firewall at both **Datacenter** and **Node** level.  
-- Regularly update Proxmox and guest OSs.  
-- Use snapshots before upgrades or risky changes.  
-- Set alerts to your email (Datacenter → Notifications).
-
----
-
-## 🧱 Best Practices
-
-- Allocate resources efficiently:  
-  - 2 vCPUs / 4GB RAM for general VMs  
-  - 4 vCPUs / 8GB RAM for Jellyfin when streaming  
-- Keep host updates before guest updates.  
-- Store ISOs, templates, and backups in organized directories.  
-- Use **Ansible** from HL-RHServer for configuration management.  
-- Maintain a markdown **change log** for all VM and network edits.
-
----
-
-## 🚦 Troubleshooting
-
-| Issue | Solution |
-|--------|-----------|
-| Can't access web UI | Check IP, ensure port 8006 open |
-| SSH fails | Verify authorized_keys and sshd_config |
-| Disk space full | Prune backups/snapshots: `vzdump --prune-backups keep-last=3` |
-| VM not on LAN | Check bridge mapping and interface |
+| All VMs Daily backups 20:00 | Keep Last 5 |
+| All VMs 30min Snapshots | Keep last 3 |
 
 ---
 
 ## ✅ Quick Build Checklist
 
 - [ ] Install Proxmox and set IP `192.168.0.200`
+- [ ] Post install tweeks
 - [ ] Update & patch host
-- [ ] Set up SSH key login
-- [ ] Add LVM-thin or ZFS storage
-- [ ] Upload OS ISOs
+- [ ] Add SMB/CIFS storage
 - [ ] Create VMs and install guest agent
 - [ ] Enable backups
-- [ ] Configure firewall
-- [ ] Snapshot before major changes
-
----
-
-## 🧾 Final Notes
-
-- 16GB RAM is plenty for lightweight testing; limit VM memory and overcommit carefully.  
-- Use templates to clone new VMs quickly.  
-- Take advantage of Proxmox’s snapshot & backup features — they’ll save you hours.  
-- If something breaks, restore from snapshot, not from scratch.
-
----
-
-If you want, I can also write a Markdown guide for provisioning your first VMs (HL-RHServer, HL-DOCKER, HL-MEDIA) with Ansible and Docker.
