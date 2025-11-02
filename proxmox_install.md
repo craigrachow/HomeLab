@@ -1,36 +1,16 @@
 # Proxmox VE — Step-by-Step Install Guide
 
-This guide covers installing **Proxmox VE** on your **Intel i7 / 16GB RAM / 512GB SSD** HomeLab machine.  
-You already have the ISO file — we’ll walk through booting, installing, configuring networking, and applying best practices.
+This guide covers how i went about installing **Proxmox VE** on my HomeLab machine.  
 
 ---
 
 ## 🧰 Prerequisites
 
 - Proxmox VE ISO written to a USB (Rufus, balenaEtcher, or `dd`)
-- Intel i7 host with 16GB RAM and 512GB SSD
 - Keyboard + monitor attached for setup
 - Another computer on the same LAN to access the Proxmox web UI
 - Router/gateway with subnet `192.168.0.0/24`
 - Static management IP: **192.168.0.200**
-
----
-
-## ⚙️ Before You Begin — Key Decisions
-
-### ZFS vs LVM-Thin
-| Option | Pros | Cons |
-|--------|------|------|
-| **ZFS** | Data integrity, snapshots, checksums | Higher RAM use (~2GB+), single disk = no redundancy |
-| **LVM-Thin (default)** | Lightweight, simple, great for single disk | No built-in integrity checks |
-
-**Recommendation:** Use **LVM-Thin** for your single SSD unless you specifically want ZFS features.
-
-### Tips
-- Reserve IP `192.168.0.200` on your router to avoid conflicts  
-- Enable **SSH key authentication** and disable password logins later  
-- Isolate **HL-PWNBOX** and **HL-VULBOX** on a separate bridge or VLAN  
-- Use **backups + snapshots** before updates or testing changes  
 
 ---
 
@@ -42,10 +22,9 @@ You already have the ISO file — we’ll walk through booting, installing, conf
 3. Accept the EULA.
 
 ### 2. Choose Target Disk and Filesystem
-1. Select your **512GB SSD** as the target.  
+1. Select nessesary disk as the target.  
 2. Choose filesystem:
    - **LVM-Thin (Recommended)** for simplicity.
-   - **ZFS (RAID0)** if you want snapshot features.
 
 ### 3. Set Region, Password & Email
 - Region: Select your timezone.  
@@ -75,16 +54,21 @@ You already have the ISO file — we’ll walk through booting, installing, conf
    - User: `root`
    - Password: (the one you set)
 
-If the page doesn’t load, check the IP using the host console:
-```bash
-ip addr
-```
-
 ---
 
 ## 🧩 Post-Install Setup
 
-### 1. Update Packages
+### 1. Disable No-Subscription Annoyances 
+1. In webUI navigate to Repositories 
+2. Disable Enterprise Repository 
+3. Add Non-Subscription Repository
+4. (Optional) Remove the “No Valid Subscription” Popup:
+```bash
+sed -i.bak "s/data.status !== 'Active'/false/" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+systemctl restart pveproxy.service
+```
+
+### 2. Update Packages
 ```bash
 apt update && apt full-upgrade -y
 ```
@@ -93,21 +77,6 @@ If you’re using the free (no-subscription) version, add the non-subscription r
 ```bash
 echo "deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription" > /etc/apt/sources.list.d/pve-no-subscription.list
 apt update
-```
-
-### 2. Configure SSH Keys
-On your workstation:
-```bash
-ssh-keygen
-ssh-copy-id root@192.168.0.200
-```
-Then optionally disable password logins:
-```bash
-nano /etc/ssh/sshd_config
-# Set the following:
-PermitRootLogin prohibit-password
-PasswordAuthentication no
-systemctl reload sshd
 ```
 
 ### 3. Configure NTP (Time Sync)
