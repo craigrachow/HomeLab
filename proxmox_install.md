@@ -2,7 +2,6 @@
 
 This guide covers how i went about installing **Proxmox VE** on my HomeLab machine.  
 
----
 
 ## 🧰 Prerequisites
 
