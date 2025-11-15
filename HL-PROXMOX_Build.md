@@ -1,7 +1,7 @@
-# HL-PROXMOX Red Hat Enterprise Linux 10 Build Guide
+# HL-RHServer Red Hat Enterprise Linux 10 Build Guide
 
 ## 1. Overview
-This document outlines the build instructions for deploying a **Red Hat Enterprise Linux (RHEL) 10** virtual machine named **HL-PROXMOX** on a Proxmox Virtual Environment.  
+This document outlines the build instructions for deploying a **Red Hat Enterprise Linux (RHEL) 10** virtual machine named **HL-RHServer** on a Proxmox Virtual Environment.  
 The final server configuration will include:
 - Static IP: **192.168.0.205**
 - SSH enabled  
@@ -14,10 +14,10 @@ The final server configuration will include:
 ## 2. VM Specifications (Recommended)
 | Setting | Value |
 |--------|--------|
-| Name | HL-PROXMOX |
-| CPU | 4 vCPUs |
-| RAM | 8 GB |
-| Storage | 60–120 GB (qcow2 or ZFS recommended) |
+| Name | HL-RHServer |
+| CPU | 2 vCPUs (`Select host CPU type`) |
+| RAM | 4 GB |
+| Storage | 30 GB |
 | Network | VirtIO |
 | OS Type | Linux / RHEL |
 
