@@ -77,8 +77,7 @@ sandpit-win
 # ------------------------------------------------------------
 [homelab:children]
 linux_servers
-windows_servers"
- | sudo tee -a ./ansible/inventory.ini > /dev/null 
+windows_servers" | sudo tee -a ./ansible/inventory.ini > /dev/null 
 
 
 
@@ -98,8 +97,7 @@ roles_path = roles
 [privilege_escalation]
 become = True
 become_method = sudo
-become_ask_pass = False"
- | sudo tee -a ./ansible/ansible.cfg > /dev/null 
+become_ask_pass = False" | sudo tee -a ./ansible/ansible.cfg > /dev/null 
 
 
 
@@ -128,8 +126,7 @@ echo "---
     - name: Update packages
       ansible.builtin.dnf:
         name: "*"
-        state: latest"
- | sudo tee -a ./ansible/update_all.yml > /dev/null
+        state: latest" | sudo tee -a ./ansible/update_all.yml > /dev/null
 
 
 
@@ -151,8 +148,7 @@ echo "---
           - git
           - curl
           - wget
-        state: present"
- | sudo tee -a ./ansible/install_baseline_tools.yml > /dev/null
+        state: present" | sudo tee -a ./ansible/install_baseline_tools.yml > /dev/null
 
 
 
@@ -181,8 +177,7 @@ echo "---
     - name: Restart sshd
       ansible.builtin.service:
         name: sshd
-        state: restarted"
- | sudo tee -a ./ansible/harden_ssh.yml > /dev/null 
+        state: restarted" | sudo tee -a ./ansible/harden_ssh.yml > /dev/null 
 
 
 
@@ -200,8 +195,7 @@ common_packages:
   - htop
   - wget
   - curl
-  - git"
- | sudo tee -a ./ansible/all.yml > /dev/null 
+  - git" | sudo tee -a ./ansible/all.yml > /dev/null 
 
 
 
@@ -217,8 +211,7 @@ firewall_services:
 baseline_packages:
   - python3
   - policycoreutils
-  - net-tools"
- | sudo tee -a ./ansible/linux_servers.yml > /dev/null  
+  - net-tools" | sudo tee -a ./ansible/linux_servers.yml > /dev/null  
 
 
 
@@ -230,8 +223,7 @@ echo "---
 ansible_connection: winrm
 ansible_port: 5986
 ansible_winrm_transport: basic
-ansible_winrm_server_cert_validation: ignore"
- | sudo tee -a ./ansible/windows_servers.yml > /dev/null 
+ansible_winrm_server_cert_validation: ignore" | sudo tee -a ./ansible/windows_servers.yml > /dev/null 
 
 
 
@@ -243,8 +235,7 @@ ansible_controller_tools:
   - ansible-core
   - git
   - python3-pip
-  - sshpass"
- | sudo tee -a ./ansible/ansible_controllers.yml > /dev/null 
+  - sshpass" | sudo tee -a ./ansible/ansible_controllers.yml > /dev/null 
 
 
 
@@ -253,8 +244,7 @@ ansible_controller_tools:
 echo "Create nfs_servers.yml"
 echo "---
 nfs_export_path: "/srv/nfs/proxmox_backups"
-nfs_allowed_network: "192.168.0.0/24""
- | sudo tee -a ./ansible/nfs_servers.yml > /dev/null 
+nfs_allowed_network: "192.168.0.0/24"" | sudo tee -a ./ansible/nfs_servers.yml > /dev/null 
 
 
 
@@ -262,7 +252,7 @@ nfs_allowed_network: "192.168.0.0/24""
 
 
 
- echo "Create site.yml"
+echo "Create site.yml"
 echo "---
 # ===============================================================
 # Full HomeLab Orchestration Playbook
@@ -271,12 +261,9 @@ echo "---
 - import_playbook: ping_test.yml
 - import_playbook: update_all.yml
 - import_playbook: install_baseline_tools.yml
-- import_playbook: harden_ssh.yml"
- | sudo tee -a ./ansible/site.yml > /dev/null 
+- import_playbook: harden_ssh.yml" | sudo tee -a ./ansible/site.yml > /dev/null 
 
  
-
-
 
  
 echo "Ansible files done!"    
