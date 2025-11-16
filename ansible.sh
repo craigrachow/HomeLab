@@ -110,8 +110,7 @@ echo "---
 
   tasks:
     - name: Ping test
-      ansible.builtin.ping:"
- | sudo tee -a ./ansible/ping_test.yml > /dev/null 
+      ansible.builtin.ping:" | sudo tee -a ./ansible/ping_test.yml > /dev/null 
 
 
 
