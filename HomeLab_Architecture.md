@@ -1,4 +1,4 @@
-# HomeLab — Asset Register & Architecture
+# HomeLab - Asset Register & Architecture
 
 This document is a single-source reference for my HomeLab running on a dedicated Proxmox host. It is written in a direct, first-person style to help me build, operate and troubleshoot the environment.
 
