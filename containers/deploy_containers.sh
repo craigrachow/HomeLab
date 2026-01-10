@@ -64,7 +64,7 @@ echo "Preparing to deploy the following applications ${APPLICATIONS[@]}"
 # loop through each app
 for APPLICATIONS in "${APPLICATIONS[@]}"; do
     echo "Deploying ${APPLICATIONS}..."
-    bash $BASE_CONTAINER_DIR/${APPLICATIONS}/${APPLICATIONS}.sh
+    bash $BASE_CONTAINER_DIR/${APPLICATIONS}.sh
     echo ""
 done
 
