@@ -57,13 +57,13 @@ Document any IP changes in the change-log section.
 | Asset ID | Hostname | Role / Purpose | IP Address | CPU | RAM | Disk | OS | Services | Notes |
 |---|---:|---|---:|---:|---:|---:|---|---|---|
 | A001 | HL-PROXMOX | Hypervisor / Management | 192.168.0.200 | Intel i7 (host) | 16 GB | 512 GB SSD | Proxmox VE | VM hosting, backups | Host machine — primary asset |
-| A002 | HL-RHServer | RedHat: Ansible, NFS/SMB | 192.168.0.205 | 2 vCPU | 2–4 GB | 40 GB | RHEL/CentOS/Alma | Ansible, NFS, Samba, SSH | Use for config management, shared storage |
-| A003 | HL-DOCKER | Docker host | 192.168.0.206 | 2 vCPU | 2–4 GB | 40–60 GB | Debian/Ubuntu | Docker Engine, Portainer (optional) | Run small apps, containers |
-| A004 | HL-MEDIA | Media test | 192.168.0.207 | 2 vCPU | 3–4 GB | 80–120 GB | Debian/Ubuntu | Jellyfin, Samba/NFS | Media transcode testing (may require more disk) |
-| A005 | HL-PWNBOX | Pentest / CTF box | 192.168.0.208 | 2 vCPU | 2–4 GB | 40 GB | Kali/Parrot | Pentesting tools, VPN | Keep off internet when not needed; snapshot before use |
-| A006 | HL-VULBOX | Vulnerable services | 192.168.0.209 | 2 vCPU | 2–4 GB | 40–80 GB | Debian/Ubuntu | Juice Shop, DVWA, misconfig apps | Isolate from other VMs, snapshot frequently |
-| A007 | HL-SANDWIN | Windows sandpit | 192.168.0.210 | 2 vCPU | 4 GB | 60 GB | Windows 10/11 | Testing miscellaneous Windows apps | Use checkpoints, revert after tests |
-| A008 | HL-SANDLIN | Linux sandpit | 192.168.0.211 | 2 vCPU | 2–4 GB | 40 GB | Ubuntu/CentOS | Random tests | Template-based deployment |
+| A005 | HL-RHServer | RedHat: Ansible, NFS/SMB | 192.168.0.205 | 2 vCPU | 2–4 GB | 40 GB | RHEL/CentOS/Alma | Ansible, NFS, Samba, SSH | Use for config management, shared storage |
+| A006 | HL-DOCKER | Docker host | 192.168.0.206 | 2 vCPU | 2–4 GB | 40–60 GB | Debian/Ubuntu | Docker Engine, Portainer (optional) | Run small apps, containers |
+| A007 | HL-MEDIA | Media test | 192.168.0.207 | 2 vCPU | 3–4 GB | 80–120 GB | Debian/Ubuntu | Jellyfin, Samba/NFS | Media transcode testing (may require more disk) |
+| A008 | HL-PWNBOX | Pentest / CTF box | 192.168.0.208 | 2 vCPU | 2–4 GB | 40 GB | Kali/Parrot | Pentesting tools, VPN | Keep off internet when not needed; snapshot before use |
+| A009 | HL-VULBOX | Vulnerable services | 192.168.0.209 | 2 vCPU | 2–4 GB | 40–80 GB | Debian/Ubuntu | Juice Shop, DVWA, misconfig apps | Isolate from other VMs, snapshot frequently |
+| A010 | HL-SANDWIN | Windows sandpit | 192.168.0.210 | 2 vCPU | 4 GB | 60 GB | Windows 10/11 | Testing miscellaneous Windows apps | Use checkpoints, revert after tests |
+| A011 | HL-SANDLIN | Linux sandpit | 192.168.0.211 | 2 vCPU | 2–4 GB | 40 GB | Ubuntu/CentOS | Random tests | Template-based deployment |
 
 > Notes:
 > - CPU/RAM allocations above are suggestions. I will tune based on actual usage. If running media transcoding (Jellyfin), increase vCPU and RAM for HL-MEDIA.
@@ -143,22 +143,22 @@ Snapshot policy:
 - Key config: /etc/ansible/hosts (inventory), export shares for `HL-MEDIA` and `HL-DOCKER` if needed.
 - Backup: config files and inventory daily.
 
-### HL-DOCKER (A003)
+### HL-DOCKER (A006)
 - Role: host small containers and reverse proxy.
 - Services: `docker`, `docker-compose`, `portainer` (optional), `nginx` or `traefik`.
 - Key config: map volumes to Proxmox storage location; use compose files stored on NFS/Samba share or local template.
 
-### HL-MEDIA (A004)
+### HL-MEDIA (A007)
 - Role: Jellyfin and media streaming tests.
 - Services: `jellyfin`, Samba/NFS for media shares.
 - Note: Media transcoding is CPU heavy — increase vCPU and RAM when actively streaming.
 
-### HL-PWNBOX & HL-VULBOX (A005/A006)
+### HL-PWNBOX & HL-VULBOX (A008/A009)
 - Role: offensive security testing and intentionally vulnerable apps.
 - Isolation: ideally on `bridge-untrusted` with firewall rules blocking lateral movement.
 - Maintain snapshots and revert after each session.
 
-### HL-SANDWIN / HL-SANDLIN (A007/A008)
+### HL-SANDWIN / HL-SANDLIN (A010/A011)
 - Role: experimental test VMs for software or config testing.
 - Use templates so I can destroy and recreate quickly.
 
