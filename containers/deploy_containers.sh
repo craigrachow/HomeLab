@@ -54,7 +54,8 @@ echo "Preparing to deploy the following applications ${APPLICATIONS[@]}"
 # loop through each app
 for APPLICATIONS in "${APPLICATIONS[@]}"; do
     echo "Deploying ${APPLICATIONS}..."
-    echo "Starting ${APPLICATIONS}..."
+    bash ${APPLICATIONS}.sh
+    echo ""
 done
 
 # ------------------------------------------------------------
@@ -63,6 +64,7 @@ done
 
 echo ""
 echo "${APPLICATIONS[@]} have been deployed."
+echo ""
 docker ps
 
 echo ""
