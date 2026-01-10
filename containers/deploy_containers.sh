@@ -16,7 +16,7 @@ set -e   # Exit immediately if any command fails
 BASE_CONTAINER_DIR="/containers"
 
 # Add or remove apps here — the loop will automatically adjust
-APPLICATIONS=("portainer" "app2" "app3")
+APPLICATIONS=("portainer")
 
 # ------------------------------------------------------------
 # STEP 1 — Update the Operating System
