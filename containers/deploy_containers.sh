@@ -21,15 +21,14 @@ APPLICATIONS=("portainer")
 # ------------------------------------------------------------
 # STEP 1 — Update the Operating System
 # ------------------------------------------------------------
-
-#echo "Updating operating system..."
-#sudo apt-get update
-#sudo apt-get upgrade -y
+echo ""
+echo "Updating operating system..."
+sudo apt-get update
+sudo apt-get upgrade -y
 
 # ------------------------------------------------------------
 # STEP 2 — Create base container directory
 # ------------------------------------------------------------
-
 echo "Ensuring base container directory exists..."
 sudo mkdir -p "$BASE_CONTAINER_DIR"
 sudo chown -R "$USER:$USER" "$BASE_CONTAINER_DIR"
@@ -58,7 +57,7 @@ rsync -a --delete "$REPO_DIR/$SUBDIR/" "$TARGET_DIR/"
 # ------------------------------------------------------------
 # STEP 4 — Deploy APPLICATION Containers
 # ------------------------------------------------------------
-
+echo ""
 echo "Preparing to deploy the following applications ${APPLICATIONS[@]}"
 
 # loop through each app
