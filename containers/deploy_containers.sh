@@ -5,8 +5,7 @@
 # Purpose:
 #  - Update the OS
 #  - Prepare container directories
-#  - Deploy Portainer using Docker Compose
-#  - Leave structure ready for future container deployments
+#  - Deploy Containers using Docker Compose
 # ============================================================
 
 set -e   # Exit immediately if any command fails
@@ -17,7 +16,16 @@ set -e   # Exit immediately if any command fails
 
 BASE_CONTAINER_DIR="/containers"
 
-# Portainer Variables
+# Container App Variables
+APPLICATIONS=('portainer' 'Banana' 'Orange')
+
+
+echo "${APPLICATIONS[@]}"           # All elements have been deployed
+
+for i in "${arrayName[@]}"; do
+  echo "$i run this command YELL YELL YELL"
+done
+
 PORTAINER_DIR="$BASE_CONTAINER_DIR/portainer"
 PORTAINER_DATA_DIR="$PORTAINER_DIR/data"
 PORTAINER_COMPOSE_FILE="$PORTAINER_DIR/docker-compose.yml"
@@ -43,37 +51,7 @@ sudo mkdir -p "$BASE_CONTAINER_DIR"
 sudo chown -R "$USER:$USER" "$BASE_CONTAINER_DIR"
 
 # ------------------------------------------------------------
-# STEP 3 — Create Portainer directories
-# ------------------------------------------------------------
-
-echo "Creating Portainer directories..."
-mkdir -p "$PORTAINER_DIR"
-mkdir -p "$PORTAINER_DATA_DIR"
-
-# ------------------------------------------------------------
-# STEP 4 — Create Portainer docker-compose.yml
-# ------------------------------------------------------------
-
-echo "Creating Portainer Docker Compose file..."
-
-cat <<EOF > "$PORTAINER_COMPOSE_FILE"
-version: "3.8"
-
-services:
-  portainer:
-    image: ${PORTAINER_IMAGE}
-    container_name: portainer
-    restart: unless-stopped
-    ports:
-      - "${PORTAINER_HTTP_PORT}:9000"
-      - "${PORTAINER_HTTPS_PORT}:9443"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${PORTAINER_DATA_DIR}:/data
-EOF
-
-# ------------------------------------------------------------
-# STEP 5 — Deploy Portainer
+# STEP 3 — Deploy APP Containers
 # ------------------------------------------------------------
 
 echo "Deploying Portainer..."
@@ -89,7 +67,7 @@ echo "Portainer has been deployed."
 echo "Access it via:"
 echo "  https://<server-ip>:${PORTAINER_HTTPS_PORT}"
 echo ""
-docker ps | grep portainer || true
+docker ps
 
 # ------------------------------------------------------------
 # STEP 7 — Placeholder for future containers
