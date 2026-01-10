@@ -57,7 +57,7 @@ services:
 EOF
 
 # ------------------------------------------------------------
-# STEP 5 — Deploy $APP
+# STEP 3 — Deploy $APP
 # ------------------------------------------------------------
 
 echo "Deploying $APP..."
@@ -65,15 +65,15 @@ cd "$APP_DIR"
 docker compose up -d
 
 # ------------------------------------------------------------
-# STEP 6 — Show Status
+# STEP 4 — Show Status
 # ------------------------------------------------------------
 
 echo ""
-echo "Portainer has been deployed."
+echo "$APP has been deployed."
 echo "Access it via:"
-echo "  https://<server-ip>:${PORTAINER_HTTPS_PORT}"
+echo "  https://<server-ip>:${APP_HTTPS_PORT}"
 echo ""
-docker ps | grep portainer || true
+docker ps | grep $APP || true
 
 # ------------------------------------------------------------
 # STEP 7 — Placeholder for future containers
@@ -90,4 +90,4 @@ docker ps | grep portainer || true
 # This allows this script to become your full HomeLab deployment tool.
 
 echo ""
-echo "Container deployment script finished successfully."
+echo "$APP deployment script finished successfully."
