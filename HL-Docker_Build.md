@@ -15,8 +15,8 @@ This document describes how to deploy **HL-DOCKER** on Proxmox as a dedicated co
 | Resource | Value |
 |--------|-------|
 | vCPU | 4 |
-| RAM | 8 GB |
-| Disk | 80 GB |
+| RAM | 4 GB |
+| Disk | 40 GB |
 | Network | vmbr0 (bridged) |
 
 ---
@@ -28,7 +28,7 @@ Set hostname to **HL-DOCKER** and create user `admin`.
 
 ---
 
-## Step 2 – Set Static IP
+## Step 2 - Set Static IP
 
 ```bash
 sudo nano /etc/netplan/00-installer-config.yaml
