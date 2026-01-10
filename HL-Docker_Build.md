@@ -64,36 +64,20 @@ sudo systemctl start ssh
 
 ---
 
-## Step 4 – Install Docker
+## Step 4 – Install Docker and Docker Compose
 
 ```bash
-curl -fsSL https://get.docker.com | sudo bash
-sudo usermod -aG docker admin
-newgrp docker
+sudo apt install -y docker-compose
 ```
-
 Verify:
 ```bash
 docker version
 ```
-
 ---
 
-## Step 5 – Install Docker Compose
-
-```bash
-sudo apt install -y docker-compose-plugin
-```
-
----
-
-## Step 6 – Install Portainer
-
-```bash
-docker volume create portainer_data
-
-docker run -d   -p 9000:9000   -p 9443:9443   --name portainer   --restart=always   -v /var/run/docker.sock:/var/run/docker.sock   -v portainer_data:/data   portainer/portainer-ce
-```
+## Step 5 – Install Portainer
+Done via deploy_containers.sh in  ./containers directory.
+Must do a GitHub clone to get these scripts onto the server.
 
 Access:
 ```
@@ -102,7 +86,7 @@ https://192.168.0.206:9443
 
 ---
 
-## Step 7 – Install Cockpit
+## Step 6 – Install Cockpit
 
 ```bash
 sudo apt install -y cockpit
@@ -116,16 +100,9 @@ https://192.168.0.206:9090
 
 ---
 
-## Step 8 – Create Container Directories
-
-```bash
-sudo mkdir -p /srv/docker/{apps,volumes,compose}
-sudo chown -R admin:admin /srv/docker
-```
-
 ---
 
-## Step 9 – Firewall
+## Step 7 – Firewall
 
 ```bash
 sudo ufw allow 22
@@ -139,15 +116,6 @@ sudo ufw enable
 
 ---
 
-## Step 10 – Proxmox Snapshot
-
-Once configured, take a snapshot:
-```
-HL-DOCKER-BASE
-```
-
----
-
 ## Final Checklist
 
 - [ ] Static IP set  
@@ -155,7 +123,7 @@ HL-DOCKER-BASE
 - [ ] Docker running  
 - [ ] Portainer reachable  
 - [ ] Cockpit reachable  
-- [ ] Snapshot taken  
+- [ ] Backups configured  
 
 ---
 
