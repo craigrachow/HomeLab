@@ -42,7 +42,6 @@ mkdir -p "$APP_DATA_DIR"
 echo "Creating $APP Docker Compose file..."
 
 cat <<EOF > "$APP_COMPOSE_FILE"
-version: "3.8"
 
 services:
   $APP:
@@ -76,19 +75,6 @@ echo "  https://<server-ip>:${APP_HTTPS_PORT}"
 echo ""
 docker ps | grep $APP || true
 
-# ------------------------------------------------------------
-# STEP 7 — Placeholder for future containers
-# ------------------------------------------------------------
-
-# Future container deployments should be added here.
-# Example:
-#
-# NEXT_APP_DIR="$BASE_CONTAINER_DIR/myapp"
-# mkdir -p "$NEXT_APP_DIR"
-# cd "$NEXT_APP_DIR"
-# docker compose up -d
-#
-# This allows this script to become your full HomeLab deployment tool.
-
 echo ""
 echo "$APP deployment script finished successfully."
+echo ""
