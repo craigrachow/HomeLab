@@ -1,9 +1,10 @@
 
 #!/bin/bash
+APP='portainer'
 # ============================================================
 # HomeLab Container Deployment Script
 # Purpose:
-#  - Deploy Portainer using Docker Compose
+#  - Deploy $APP using Docker Compose
 # ============================================================
 
 set -e   # Exit immediately if any command fails
@@ -11,15 +12,15 @@ set -e   # Exit immediately if any command fails
 # ------------------------------------------------------------
 # CONFIGURATION VARIABLES
 # ------------------------------------------------------------
-APP='portainer'
+
 BASE_CONTAINER_DIR="/containers"
 
-# Portainer Variables
+# $APP Variables
 APP_DIR="$BASE_CONTAINER_DIR/$APP"
 APP_DATA_DIR="$APP_DIR/data"
 APP_COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 
-APP_IMAGE="portainer/portainer-ce:latest"
+APP_IMAGE="$APP/$APP-ce:latest"
 APP_HTTP_PORT="9000"
 APP_HTTPS_PORT="9443"
 
@@ -35,7 +36,7 @@ mkdir -p "$APP_DIR"
 mkdir -p "$APP_DATA_DIR"
 
 # ------------------------------------------------------------
-# STEP 2 — Create Portainer docker-compose.yml
+# STEP 2 — Create $APP docker-compose.yml
 # ------------------------------------------------------------
 
 echo "Creating $APP Docker Compose file..."
