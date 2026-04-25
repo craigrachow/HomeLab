@@ -17,6 +17,7 @@ BASE_CONTAINER_DIR="/containers"
 
 # Add or remove apps here — the loop will automatically adjust
 APPLICATIONS=("portainer")
+APPLICATIONS=("uptimekuma")
 
 # ------------------------------------------------------------
 # STEP 1 — Update the Operating System
