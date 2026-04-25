@@ -16,8 +16,8 @@ set -e   # Exit immediately if any command fails
 BASE_CONTAINER_DIR="/containers"
 
 # Add or remove apps here — the loop will automatically adjust
-APPLICATIONS=("portainer")
-APPLICATIONS=("uptime-kuma")
+APPLICATIONS=("portainer, uptime-kuma")
+#APPLICATIONS=("uptime-kuma")
 
 # ------------------------------------------------------------
 # STEP 1 — Update the Operating System
