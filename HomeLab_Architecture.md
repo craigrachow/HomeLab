@@ -73,15 +73,31 @@ Document any IP changes in the change-log section.
 
 ## Logical Architecture (textual diagram)
 
+```
+                Internet
+                    │
+              Router
+                    │
+             192.168.0.0/24
+                    │
+             Proxmox Host
+          192.168.0.200
+                    │
+    ┌───────────────┼───────────────┐
+    │               │               │
+HL-DOCKER      HL-VULBOX      HL-SANDLIN
+192.168.0.206 192.168.0.209 192.168.0.211
+```
+---
 Proxmox host (HL-PROXMOX, 192.168.0.200)
-├─ bridged network `vmbr0` -> 192.168.0.0/24 -> home router
-├─ VM: HL-RHServer (192.168.0.205)
-├─ VM: HL-DOCKER (192.168.0.206)
-├─ VM: HL-MEDIA (192.168.0.207)
-├─ VM: HL-PWNBOX (192.168.0.208)
-├─ VM: HL-VULBOX (192.168.0.209)
-├─ VM: HL-SANDWIN (192.168.0.210)
-└─ VM: HL-SANDLIN (192.168.0.211)
+├─ bridged network `vmbr0` -> 192.168.0.0/24 -> home router  
+├─ VM: HL-RHServer (192.168.0.205)  
+├─ VM: HL-DOCKER (192.168.0.206)  
+├─ VM: HL-MEDIA (192.168.0.207)  
+├─ VM: HL-PWNBOX (192.168.0.208)  
+├─ VM: HL-VULBOX (192.168.0.209)  
+├─ VM: HL-SANDWIN (192.168.0.210)  
+└─ VM: HL-SANDLIN (192.168.0.211)  
 
 I will keep traffic on the same L2 network. For extra isolation, I may create VLANs and additional bridges (see Security & Network section).
 
