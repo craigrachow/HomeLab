@@ -1,205 +1,39 @@
-# HL-VULBOX — Kali Linux Vulnerable Lab Build Guide
-
-See build steps for Kali, static IP **192.168.0.209**, enable SSH and XRDP, install Docker and Docker Compose, deploy OWASP Juice Shop under `/containers/juiceshop`, install Metasploitable3 (or preferably deploy as a separate VM if nested virtualization is unavailable), configure a root cron job `0 */6 * * * /sbin/shutdown -h now`, isolate the VM from the Internet, snapshot before changes, and verify SSH, XRDP, Docker, Juice Shop, and cron configuration.
-
-## Build Checklist
-- [ ] Kali installed
-- [ ] Static IP configured
-- [ ] SSH enabled
-- [ ] XRDP enabled
-- [ ] Docker installed
-- [ ] Docker Compose installed
-- [ ] Juice Shop deployed
-- [ ] Metasploitable3 available
-- [ ] Shutdown cron configured
-- [ ] Snapshot created
-# HL-VULBOX Build Guide
-## Kali Linux Vulnerable Lab
-
----
-
-# Document Information
-
-| Item | Value |
-|------|-------|
-| Hostname | HL-VULBOX |
-| Platform | Proxmox VE |
-| Operating System | Kali Linux (Latest Stable) |
-| VM IP Address | 192.168.0.209 |
-| Purpose | Vulnerable Testing Platform |
-| Primary User | Craig Rachow |
-| Build Version | 1.0 |
-| Last Updated | July 2026 |
-
----
+# HL-VULBOX - Kali Linux Vulnerable Lab Build Guide
 
 # Overview
+This document describes how to deploy HL-VULBOX on Proxmox as a dedicated deliberately vulnerable virtual machine used for learning, testing and practice.
 
-HL-VULBOX is a deliberately vulnerable virtual machine used for:
+Unlike **HL-PWNBOX**, which is the attacking workstation, HL-VULBOX exists to be attacked. 
+It will host intentionally vulnerable applications and therefore **must never be exposed to the Internet**. It will also auto shutdown after 6 hours to limit attack surface.
 
-- OWASP Top 10 practice
-- Capture The Flag (CTF)
-- Web Application Penetration Testing
-- Docker Security Testing
-- Exploit Development
-- Red Team Practice
-- Learning Offensive Security
-
-Unlike **HL-PWNBOX**, which is the attacking workstation, HL-VULBOX exists to be attacked.
-
-It will host intentionally vulnerable applications and therefore **must never be exposed to the Internet**.
+Hostname: HL-VULBOX
+IP Address: 192.168.0.209
+OS: Kali Linux
+Role: Vulnerable Testing Platform
 
 ---
 
-# HomeLab Position
-
-```
-                Internet
-                    │
-              Home Router
-                    │
-             192.168.0.0/24
-                    │
-             Proxmox Host
-          192.168.0.200
-                    │
-    ┌───────────────┼───────────────┐
-    │               │               │
-HL-PWNBOX      HL-VULBOX      HL-SANDLIN
-192.168.0.208 192.168.0.209 192.168.0.211
-```
-
-HL-PWNBOX performs the attacks.
-
-HL-VULBOX hosts the vulnerable applications.
-
----
-
-# Recommended VM Resources
+# VM Resources
 
 | Resource | Recommended |
 |----------|-------------|
-| CPU | 4 vCPU |
-| RAM | 8 GB |
-| Disk | 100 GB |
-| BIOS | OVMF (UEFI) |
-| Machine Type | q35 |
-| SCSI Controller | VirtIO SCSI |
-| Network Adapter | VirtIO |
-| Bridge | vmbr0 |
-| QEMU Guest Agent | Enabled |
+| CPU | 2 vCPU |
+| RAM | 4 GB |
+| Disk |80 GB |
+| Network | VirtIO (bridged) |
 
 ---
 
 # VM Creation
-
-Within Proxmox:
-
-Create VM
-
-```
-Name
------
-HL-VULBOX
-```
-
-Select:
-
-```
-Guest OS
---------
-Linux
-
-Version
--------
-6.x Kernel
-```
-
-Storage
-
-```
-100 GB
-VirtIO SCSI
-Discard Enabled
-SSD Emulation Enabled
-```
-
-CPU
-
-```
-4 Cores
-
-Type
-Host
-```
-
-Memory
-
-```
-8192 MB
-```
-
-Networking
-
-```
-Bridge
-
-vmbr0
-
-Model
-
-VirtIO
-```
-
-Finish the wizard.
-
-Do NOT start the VM yet.
-
-Enable:
-
-```
-Options
-
-QEMU Guest Agent = Enabled
-```
+Within Proxmox, create the VM as per recommended specs and OS.
 
 ---
 
 # Install Kali Linux
-
-Mount the latest Kali Linux ISO.
+Upload Kali ISO to Proxmox → Create VM → Install with defaults.
+Set hostname to HL-VULBOX and create user admin.
 
 Start the VM.
-
-Follow the installation wizard.
-
-Recommended options:
-
-```
-Hostname
-
-HL-VULBOX
-```
-
-```
-Domain
-
-Leave Blank
-```
-
-Create your normal administrator account.
-
-Do not use the root account for day-to-day work.
-
-Use Guided Partitioning.
-
-Allow the installer to use the entire virtual disk.
-
-Complete installation.
-
-Remove the ISO.
-
-Reboot.
 
 ---
 
@@ -326,6 +160,52 @@ Restart SSH.
 ```bash
 sudo systemctl restart ssh
 ```
+
+
+## Final Checklist
+- [ ] Kali installed
+- [ ] Static IP configured
+- [ ] SSH enabled
+- [ ] XRDP enabled
+- [ ] Docker installed
+- [ ] Docker Compose installed
+- [ ] Juice Shop deployed
+- [ ] Metasploitable3 available
+- [ ] Shutdown cron configured
+- [ ] Snapshot created
+# HL-VULBOX Build Guide
+## Kali Linux Vulnerable Lab
+
+---
+
+
+
+# HomeLab Position
+
+```
+                Internet
+                    │
+              Home Router
+                    │
+             192.168.0.0/24
+                    │
+             Proxmox Host
+          192.168.0.200
+                    │
+    ┌───────────────┼───────────────┐
+    │               │               │
+HL-PWNBOX      HL-VULBOX      HL-SANDLIN
+192.168.0.208 192.168.0.209 192.168.0.211
+```
+
+HL-PWNBOX performs the attacks.
+
+HL-VULBOX hosts the vulnerable applications.
+
+---
+
+
+
 
 Test from HL-PWNBOX.
 
