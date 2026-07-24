@@ -74,19 +74,19 @@ Document any IP changes in the change-log section.
 ## Logical Architecture (textual diagram)
 
 ```
-                Internet
+                 Internet
                     │
-              Router
+                  Router
                     │
-             192.168.0.0/24
+              192.168.0.0/24
                     │
-             Proxmox Host
-          192.168.0.200
+              Proxmox Host
+              192.168.0.200
                     │
     ┌───────────────┼───────────────┐
     │               │               │
-HL-DOCKER      HL-VULBOX      HL-SANDLIN
-192.168.0.206 192.168.0.209 192.168.0.211
+HL-DOCKER      HL-VULBOX          HL-ETC 
+192.168.0.206 192.168.0.209    192.168.0.2xx 
 ```
 ---
 Proxmox host (HL-PROXMOX, 192.168.0.200)
