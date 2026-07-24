@@ -180,30 +180,6 @@ sudo systemctl restart ssh
 
 
 
-# HomeLab Position
-
-```
-                Internet
-                    │
-              Home Router
-                    │
-             192.168.0.0/24
-                    │
-             Proxmox Host
-          192.168.0.200
-                    │
-    ┌───────────────┼───────────────┐
-    │               │               │
-HL-PWNBOX      HL-VULBOX      HL-SANDLIN
-192.168.0.208 192.168.0.209 192.168.0.211
-```
-
-HL-PWNBOX performs the attacks.
-
-HL-VULBOX hosts the vulnerable applications.
-
----
-
 
 
 
