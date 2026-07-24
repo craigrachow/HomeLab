@@ -47,30 +47,6 @@ sudo reboot
 # Set Static IP
 
 ```bash
-sudo nano /etc/netplan/00-installer-config.yaml
-```
-
-```yaml
-network:
-  version: 2
-  ethernets:
-    ens18:
-      dhcp4: no
-      addresses: [192.168.0.206/24]
-      gateway4: 192.168.0.1
-      nameservers:
-        addresses: [1.1.1.1, 8.8.8.8]
-```
-
-Apply:
-```bash
-sudo netplan apply
-```
-
----
-
-
-```bash
 ip addr
 ```
 
@@ -115,7 +91,7 @@ ip addr
 ping google.com
 ```
 
-## Step 3 – Enable SSH
+# Enable SSH & Remote Desktop 
 
 ```bash
 sudo apt update
@@ -123,7 +99,6 @@ sudo apt install -y openssh-server
 sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
-
 ---
 
 ## Step 4 – Install Docker and Docker Compose
