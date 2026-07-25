@@ -218,6 +218,434 @@ Restart SSH.
 sudo systemctl restart ssh
 ```
 
+---
+
+# Configure Remote Desktop (XRDP)
+
+Although SSH will be your primary management interface, Remote Desktop provides an easy way to access Kali's graphical desktop when required.
+
+## Install XRDP
+
+```bash
+sudo apt update
+sudo apt install -y xrdp
+```
+
+Enable the service.
+
+```bash
+sudo systemctl enable xrdp
+sudo systemctl start xrdp
+```
+
+Verify.
+
+```bash
+systemctl status xrdp
+```
+
+---
+
+## Allow XRDP Through the Firewall
+
+If UFW is enabled:
+
+```bash
+sudo ufw allow 3389/tcp
+```
+
+---
+
+## Connect from Windows
+
+Open **Remote Desktop Connection**.
+
+Server
+
+```
+192.168.0.209
+```
+
+Login using your Kali username and password.
+
+---
+
+# Install Docker Engine
+
+HL-VULBOX uses Docker to host intentionally vulnerable applications.
+
+Docker keeps each application isolated and allows them to be rebuilt or destroyed quickly.
+
+---
+
+## Remove Old Docker Versions
+
+```bash
+sudo apt remove docker docker-engine docker.io containerd runc -y
+```
+
+---
+
+## Install Docker
+
+```bash
+curl -fsSL https://get.docker.com | sudo sh
+```
+
+Verify.
+
+```bash
+docker version
+```
+
+---
+
+## Allow Current User to Manage Docker
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Refresh the group.
+
+```bash
+newgrp docker
+```
+
+Verify.
+
+```bash
+docker run hello-world
+```
+
+---
+
+# Install Docker Compose
+
+Ubuntu and Kali now use the Docker Compose Plugin.
+
+Install it.
+
+```bash
+sudo apt install docker-compose-plugin -y
+```
+
+Verify.
+
+```bash
+docker compose version
+```
+
+---
+
+# Create Container Directory Structure
+
+All containers should be stored beneath a common root directory.
+
+Create the directory.
+
+```bash
+sudo mkdir -p /containers
+```
+
+Recommended layout:
+
+```
+/containers
+
+    ├── juiceshop
+    │      docker-compose.yml
+    │
+    ├── dvwa
+    │      docker-compose.yml
+    │
+    ├── mutillidae
+    │      docker-compose.yml
+    │
+    ├── metasploitable3
+    │
+    └── portainer-agent
+```
+
+Keeping every application in its own folder makes backups, Git integration and upgrades much easier.
+
+---
+
+# Deploy OWASP Juice Shop
+
+Juice Shop will be the primary vulnerable web application.
+
+Create the directory.
+
+```bash
+mkdir -p /containers/juiceshop
+
+cd /containers/juiceshop
+```
+
+Create:
+
+```
+docker-compose.yml
+```
+
+Contents:
+
+```yaml
+services:
+
+  juiceshop:
+
+    image: bkimminich/juice-shop
+
+    container_name: juiceshop
+
+    restart: unless-stopped
+
+    ports:
+
+      - "3000:3000"
+```
+
+Deploy.
+
+```bash
+docker compose up -d
+```
+
+Verify.
+
+```bash
+docker ps
+```
+
+Browse to
+
+```
+http://192.168.0.209:3000
+```
+
+---
+
+# Deploy DVWA (Damn Vulnerable Web Application)
+
+Create the folder.
+
+```bash
+mkdir -p /containers/dvwa
+
+cd /containers/dvwa
+```
+
+Create:
+
+```
+docker-compose.yml
+```
+
+```yaml
+services:
+
+  dvwa:
+
+    image: vulnerables/web-dvwa
+
+    container_name: dvwa
+
+    restart: unless-stopped
+
+    ports:
+
+      - "8080:80"
+```
+
+Deploy.
+
+```bash
+docker compose up -d
+```
+
+Access.
+
+```
+http://192.168.0.209:8080
+```
+
+---
+
+# Deploy Mutillidae II
+
+Mutillidae is another intentionally vulnerable application designed for OWASP Top 10 practice.
+
+Create the folder.
+
+```bash
+mkdir -p /containers/mutillidae
+
+cd /containers/mutillidae
+```
+
+Create:
+
+```
+docker-compose.yml
+```
+
+```yaml
+services:
+
+  mutillidae:
+
+    image: citizenstig/nowasp
+
+    container_name: mutillidae
+
+    restart: unless-stopped
+
+    ports:
+
+      - "81:80"
+```
+
+Deploy.
+
+```bash
+docker compose up -d
+```
+
+Access.
+
+```
+http://192.168.0.209:81
+```
+
+---
+
+# Optional – Install Portainer Agent
+
+Your Portainer Server will live on **HL-DOCKER**.
+
+HL-VULBOX only requires the lightweight Portainer Agent.
+
+Create the folder.
+
+```bash
+mkdir -p /containers/portainer-agent
+
+cd /containers/portainer-agent
+```
+
+Create:
+
+```
+docker-compose.yml
+```
+
+```yaml
+services:
+
+  agent:
+
+    image: portainer/agent
+
+    container_name: portainer-agent
+
+    restart: unless-stopped
+
+    ports:
+
+      - "9001:9001"
+
+    volumes:
+
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+```
+
+Deploy.
+
+```bash
+docker compose up -d
+```
+
+---
+
+# Verify Running Containers
+
+```bash
+docker ps
+```
+
+Expected output should include:
+
+```
+juiceshop
+
+dvwa
+
+mutillidae
+
+portainer-agent
+```
+
+---
+
+# Configure Docker to Start at Boot
+
+```bash
+sudo systemctl enable docker
+```
+
+Verify.
+
+```bash
+systemctl status docker
+```
+
+---
+
+# Verify Network Connectivity
+
+From HL-PWNBOX test each application.
+
+```
+http://192.168.0.209:3000
+
+http://192.168.0.209:8080
+
+http://192.168.0.209:81
+```
+
+Each page should load successfully.
+
+---
+
+# Notes
+
+This server intentionally contains vulnerable software.
+
+Do **not** install production applications here.
+
+Do **not** expose any of these ports through your Internet router.
+
+Keep the VM on your HomeLab LAN only.
+
+The recommended workflow is:
+
+```
+HL-PWNBOX
+        │
+        │ Attack
+        ▼
+HL-VULBOX
+        │
+        ├── Juice Shop
+        ├── DVWA
+        ├── Mutillidae II
+        └── Future vulnerable applications
+```
+
 
 ## Final Checklist
 - [ ] Kali installed
