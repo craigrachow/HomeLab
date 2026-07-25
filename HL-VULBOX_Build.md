@@ -273,16 +273,7 @@ Login using your Kali username and password.
 # Install Docker Engine
 
 HL-VULBOX uses Docker to host intentionally vulnerable applications.
-
 Docker keeps each application isolated and allows them to be rebuilt or destroyed quickly.
-
----
-
-## Remove Old Docker Versions
-
-```bash
-sudo apt remove docker docker-engine docker.io containerd runc -y
-```
 
 ---
 
