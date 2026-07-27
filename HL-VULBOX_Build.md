@@ -41,23 +41,22 @@ chmod +x HL-VULBOX_Configure.sh
 sudo ./HL-VULBOX_Configure.sh
 ```
 The automated script will configure the VM performing the following steps.
-#   - Install SSH, XRDP, Docker, and Docker Compose
-#   - Create /containers app folders
-#   - Deploy vulnerable lab containers
-#   - Print a verification summary
+ - Set the hostname
+ - Updates and upgrades the OS
+ - Sets a static IP on eth0
+ - Installs and enables ssh and xrdp
+ - Installs Docker and Docker Compose
+ - Creates /containers directory and the requested subfolders
+ - Writes the docker-compose.yml files
+ - Starts the containers
+ - Displays a verification summary and the URLs
 
-
-Immediately after installation update the system
-
-```bash
-sudo apt update
-sudo apt full-upgrade -y
-sudo apt autoremove -y
-sudo reboot
-```
 ---
 
-# Set Static IP
+# Manual Configuration
+The following is a guide on how the system can be manually configured.  
+
+## Set Static IP
 
 ```bash
 ip addr
