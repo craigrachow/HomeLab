@@ -56,7 +56,7 @@ The automated script will configure the VM performing the following steps.
 # Manual Configuration
 The following is a guide on how the system can be manually configured.  
 
-## Set Static IP
+### Set Static IP
 
 ```bash
 ip addr
@@ -113,7 +113,7 @@ sudo systemctl start ssh
 ```
 ---
 
-## Step 4 – Install Docker and Docker Compose
+### Install Docker and Docker Compose
 
 ```bash
 sudo apt install -y docker-compose
@@ -124,7 +124,7 @@ docker version
 ```
 ---
 
-## Step 5 – Install Portainer
+### Install Portainer
 Done via deploy_containers.sh in  ./containers directory.
 Must do a GitHub clone to get these scripts onto the server.
 
@@ -135,7 +135,7 @@ https://192.168.0.206:9443
 
 ---
 
-## Step 6 – Install Cockpit
+### Install Cockpit
 
 ```bash
 sudo apt install -y cockpit
@@ -151,7 +151,7 @@ https://192.168.0.206:9090
 
 ---
 
-## Step 7 – Firewall
+### Firewall
 
 ```bash
 sudo ufw allow 22
@@ -170,7 +170,7 @@ sudo ufw enable
 
 ---
 
-# Install QEMU Guest Agent
+### Install QEMU Guest Agent
 
 ```bash
 sudo apt install qemu-guest-agent -y
