@@ -103,7 +103,7 @@ ip addr
 ping google.com
 ```
 
-# Enable SSH & Remote Desktop 
+### Enable SSH & Remote Desktop 
 
 ```bash
 sudo apt update
