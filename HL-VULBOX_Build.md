@@ -34,6 +34,19 @@ Upload Kali ISO to Proxmox → Create VM → Install with defaults.
 Set hostname to HL-VULBOX and create user admin.
 Start the VM.
 
+---
+# Automated Configuration
+```bash
+chmod +x HL-VULBOX_Configure.sh
+sudo ./HL-VULBOX_Configure.sh
+```
+The automated script will configure the VM performing the following steps.
+#   - Install SSH, XRDP, Docker, and Docker Compose
+#   - Create /containers app folders
+#   - Deploy vulnerable lab containers
+#   - Print a verification summary
+
+
 Immediately after installation update the system
 
 ```bash
