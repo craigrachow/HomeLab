@@ -411,3 +411,467 @@ df -h
 └── Backups
 
 ```
+
+---
+
+# Install Jellyfin
+
+Jellyfin should always be installed from the official Jellyfin repository rather than the Ubuntu repository. This ensures the latest stable version is installed and simplifies future upgrades.
+
+## Install Required Packages
+
+```bash
+sudo apt update
+
+sudo apt install -y \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg
+```
+
+---
+
+## Add the Official Jellyfin Repository
+
+Import the signing key.
+
+```bash
+curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key \
+| sudo gpg --dearmor \
+-o /usr/share/keyrings/jellyfin.gpg
+```
+
+Add the repository.
+
+```bash
+echo "deb [signed-by=/usr/share/keyrings/jellyfin.gpg] https://repo.jellyfin.org/ubuntu noble main" \
+| sudo tee /etc/apt/sources.list.d/jellyfin.list
+```
+
+Update package lists.
+
+```bash
+sudo apt update
+```
+
+---
+
+## Install Jellyfin
+
+```bash
+sudo apt install jellyfin -y
+```
+
+Enable the service.
+
+```bash
+sudo systemctl enable jellyfin
+
+sudo systemctl start jellyfin
+```
+
+Verify.
+
+```bash
+systemctl status jellyfin
+```
+
+---
+
+# Jellyfin Web Interface
+
+Browse to
+
+```
+http://192.168.0.207:8096
+```
+
+Complete the first-time setup wizard.
+
+Recommended administrator account.
+
+```
+Username
+
+admin
+```
+
+Use a strong password.
+
+---
+
+# Configure Storage
+
+Create the following directories.
+
+```bash
+sudo mkdir -p /mnt/media/{Movies,"TV Shows",Music,Downloads,Metadata,Transcoding,IPTV,Backups}
+```
+
+Give Jellyfin ownership.
+
+```bash
+sudo chown -R jellyfin:jellyfin /mnt/media
+
+sudo chmod -R 775 /mnt/media
+```
+
+---
+
+# Create Libraries
+
+Within Jellyfin create libraries.
+
+Movies
+
+```
+/mnt/media/Movies
+```
+
+TV Shows
+
+```
+/mnt/media/TV Shows
+```
+
+Music
+
+```
+/mnt/media/Music
+```
+
+---
+
+# Configure Metadata
+
+Navigate to
+
+```
+Dashboard
+
+Libraries
+
+Metadata
+```
+
+Enable
+
+- Download artwork
+- Download subtitles
+- Download cast information
+- Download trailers
+- Download chapter images
+
+Metadata should be stored with the media where possible.
+
+---
+
+# Configure IPTV
+
+Jellyfin has native IPTV support.
+
+Navigate to
+
+```
+Dashboard
+
+Live TV
+```
+
+Select
+
+```
+Add Tuner
+```
+
+Choose
+
+```
+M3U Tuner
+```
+
+Enter your IPTV playlist URL.
+
+Example
+
+```
+http://provider.example.com/playlist.m3u
+```
+
+Next
+
+Add your XMLTV Guide.
+
+Example
+
+```
+http://provider.example.com/guide.xml
+```
+
+After saving, Live TV will populate automatically.
+
+---
+
+# Configure Hardware Transcoding
+
+If your Intel CPU supports Quick Sync.
+
+Install drivers.
+
+```bash
+sudo apt install intel-media-va-driver-non-free vainfo -y
+```
+
+Verify.
+
+```bash
+vainfo
+```
+
+Within Jellyfin.
+
+Dashboard
+
+Playback
+
+Transcoding
+
+Enable
+
+```
+Intel Quick Sync
+```
+
+Hardware transcoding dramatically reduces CPU usage during streaming.
+
+---
+
+# Recommended Playback Settings
+
+Streaming
+
+```
+Allow Direct Play
+
+Enabled
+```
+
+```
+Allow Direct Stream
+
+Enabled
+```
+
+```
+Fallback Transcoding
+
+Enabled
+```
+
+Maximum simultaneous transcodes.
+
+```
+2
+```
+
+---
+
+# Create Users
+
+Recommended.
+
+| User | Permissions |
+|--------|------------|
+| admin | Full Administration |
+| Family | Standard Access |
+| Kids | Restricted Libraries |
+| Guest | Optional |
+
+Disable administrator permissions for normal viewing accounts.
+
+---
+
+# Scheduled Library Scan
+
+Enable
+
+```
+Scan Library
+
+Every 6 Hours
+```
+
+Enable
+
+```
+Realtime Monitoring
+```
+
+This automatically imports newly downloaded media.
+
+---
+
+# Firewall
+
+If UFW is enabled.
+
+```bash
+sudo ufw allow 8096/tcp
+```
+
+If HTTPS is configured later.
+
+```bash
+sudo ufw allow 8920/tcp
+```
+
+---
+
+# Automatic Startup
+
+Verify.
+
+```bash
+systemctl is-enabled jellyfin
+```
+
+Expected.
+
+```
+enabled
+```
+
+---
+
+# Backup Strategy
+
+Back up.
+
+```
+/etc/jellyfin
+
+/var/lib/jellyfin
+
+/mnt/media
+```
+
+The operating system can always be rebuilt.
+
+Your media and Jellyfin configuration are the important assets.
+
+---
+
+# Recommended Plugins
+
+Install from the Jellyfin Plugin Catalogue.
+
+Recommended.
+
+- Intro Skipper
+- TMDb Box Sets
+- Fanart
+- OMDb
+- MusicBrainz
+
+Avoid installing unnecessary plugins.
+
+---
+
+# Performance Recommendations
+
+Enable.
+
+```
+Hardware Acceleration
+```
+
+Store.
+
+```
+Metadata
+
+on SSD
+```
+
+Store.
+
+```
+Media
+
+on Large Storage Disk
+```
+
+Use wired Ethernet where possible.
+
+Avoid Wi-Fi for the server.
+
+---
+
+# Verification Checklist
+
+Verify.
+
+```bash
+systemctl status jellyfin
+```
+
+Browse.
+
+```
+http://192.168.0.207:8096
+```
+
+Confirm.
+
+- Jellyfin login page loads
+- Movies library created
+- TV library created
+- IPTV channels populate
+- Metadata downloads correctly
+- Playback works
+- Hardware transcoding available
+- Server starts automatically after reboot
+
+---
+
+# Future Expansion
+
+HL-MEDIA has been intentionally kept simple.
+
+Future additions could include.
+
+- Sonarr
+- Radarr
+- Prowlarr
+- Bazarr
+- qBittorrent
+- Overseerr
+- Tautulli
+
+These applications should ideally be deployed as Docker containers on **HL-DOCKER** and integrated with Jellyfin, rather than installed directly on HL-MEDIA. This keeps HL-MEDIA focused on media serving while centralising container management on your dedicated Docker host.
+
+---
+
+# Build Complete
+
+HL-MEDIA is now configured as a dedicated media server providing:
+
+- SSH administration
+- XRDP remote desktop
+- Jellyfin media streaming
+- Persistent media storage
+- IPTV support
+- Automatic metadata downloads
+- Hardware transcoding (where supported)
+- Automatic startup after reboot
+- Structured media library
+- Backup-ready storage layout
+
+This configuration follows the same design principles used throughout the HomeLab:
+
+- One VM, one primary purpose
+- Persistent storage separated from the operating system
+- Simple recovery and rebuild process
+- Consistent directory structure
+- Easy future expansion
